@@ -1,0 +1,20 @@
+project (AstroPhysSim) {
+  exename = AstroPhysSim
+  install = .
+ 
+  specific (make, gnuace) {
+    compile_flags += -std=c++11
+  }
+
+  Source_Files {
+    
+  }
+
+  Template_Files {
+    
+  }
+
+  Header_Files {
+    
+  }
+}
