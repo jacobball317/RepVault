@@ -7,7 +7,7 @@ project (AstroPhysSim) {
   }
 
   Source_Files {
-    
+    main.cpp
   }
 
   Template_Files {
@@ -15,6 +15,7 @@ project (AstroPhysSim) {
   }
 
   Header_Files {
-    
+    CelestialBody.h
+    Simulation.h
   }
 }

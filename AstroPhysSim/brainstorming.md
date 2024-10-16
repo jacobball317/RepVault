@@ -9,3 +9,9 @@ Simulation <- Responsible for managing the entire simulation
     methods to add bodies, and update their positons
 
 Last added include SFML, need to link
+
+how to build:
+first set path:
+    export PATH="/Users/jakoobz/Documents/MPC-master:$PATH"
+then:
+    mwc.pl -type make
