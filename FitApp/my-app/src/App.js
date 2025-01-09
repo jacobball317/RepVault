@@ -1,51 +1,26 @@
-import React, { useState } from 'react';
-import './App.css';
+import React, { useState } from "react";
+import WorkoutList from "./components/WorkoutList";
+import WorkoutForm from "./components/WorkoutForm";
+import "./App.css";
 
 function App() {
-  const [todos, setTodos] = useState([]);
-  const [inputValue, setInputValue] = useState('');
+  const [workouts, setWorkouts] = useState([]);
 
-  const handleInputChange = (event) => {
-    setInputValue(event.target.value);
+  const addWorkout = (workout) => {
+    setWorkouts([...workouts, workout]);
   };
 
-  const addTodo = () => {
-    if (inputValue.trim() !== '') {
-      setTodos([...todos, { text: inputValue, completed: false }]);
-      setInputValue('');
-    }
-  };
-
-  const toggleTodo = (index) => {
-    const newTodos = todos.map((todo, i) => 
-      i === index ? { ...todo, completed: !todo.completed } : todo
-    );
-    setTodos(newTodos);
-  };
-
-  const removeTodo = (index) => {
-    const newTodos = todos.filter((_, i) => i !== index);
-    setTodos(newTodos);
+  const updateWorkout = (index, updatedWorkout) => {
+    const newWorkouts = [...workouts];
+    newWorkouts[index] = updatedWorkout;
+    setWorkouts(newWorkouts);
   };
 
   return (
     <div className="App">
-      <h1>Todo List</h1>
-      <input 
-        type="text" 
-        value={inputValue} 
-        onChange={handleInputChange} 
-        placeholder="Add a new task" 
-      />
-      <button onClick={addTodo}>Add</button>
-      <ul>
-        {todos.map((todo, index) => (
-          <li key={index} style={{ textDecoration: todo.completed ? 'line-through' : 'none' }}>
-            <span onClick={() => toggleTodo(index)}>{todo.text}</span>
-            <button onClick={() => removeTodo(index)}>Remove</button>
-          </li>
-        ))}
-      </ul>
+      <h1>Workout Tracker</h1>
+      <WorkoutForm addWorkout={addWorkout} />
+      <WorkoutList workouts={workouts} updateWorkout={updateWorkout} />
     </div>
   );
 }
