@@ -26,27 +26,37 @@ function SetDetails({ sets, updateSets }) {
   return (
     <div>
       {sets.map((set, index) => (
-        <div key={index} style={{ marginBottom: "10px" }}>
+        <div key={index} className="set-item">
           <label>
             Reps:
             <input
               type="number"
               value={set.reps}
-              onChange={(e) => handleInputChange(index, "reps", parseInt(e.target.value, 10) || 0)}
+              onChange={(e) =>
+                handleInputChange(index, "reps", parseInt(e.target.value, 10) || 0)
+              }
             />
           </label>
           <label>
-            Weight (lb):
+            Weight:
             <input
               type="number"
               value={set.weight}
-              onChange={(e) => handleInputChange(index, "weight", parseInt(e.target.value, 10) || 0)}
+              onChange={(e) =>
+                handleInputChange(index, "weight", parseInt(e.target.value, 10) || 0)
+              }
             />
           </label>
-          <button onClick={() => markSetDone(index)} disabled={set.done}>
-            {set.done ? "✔ Done" : "Mark Done"}
+          <button
+            className="checkmark-button"
+            onClick={() => markSetDone(index)}
+            disabled={set.done}
+          >
+            ✔
           </button>
-          <button onClick={() => duplicateSet(index)}>Duplicate</button>
+          <button className="duplicate-button" onClick={() => duplicateSet(index)}>
+            Duplicate
+          </button>
         </div>
       ))}
       {restTimer && <RestTimer onFinish={() => setRestTimer(false)} />}
