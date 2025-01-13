@@ -95,26 +95,46 @@ nav a {
   background-color: #218838;
 }
 
-/* Workout Item Styling */
+/* Style for individual workout items */
 .workout-item {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  margin-top: 15px;
-  padding: 10px;
-  border: 1px solid #eee;
-  border-radius: 5px;
-  background: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  gap: 10px; /* Space between inputs and buttons */
+  gap: 10px; /* Consistent spacing between fields */
+  flex-wrap: wrap; /* Allow wrapping for smaller screens */
 }
 
+/* Ensure workout card container respects boundaries */
 .workout-card {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
   margin-bottom: 20px;
   padding: 15px;
   border: 1px solid #ddd;
   border-radius: 10px;
   background-color: #f9f9f9;
+  overflow: hidden; /* Prevent children from overflowing */
+  box-sizing: border-box; /* Include padding in width calculations */
+}
+/* Constrain input fields to prevent overflow */
+.workout-item input[type="text"],
+.workout-item input[type="number"] {
+  flex: 1; /* Make inputs share available space */
+  max-width: 70px; /* Constrain width to avoid overflow */
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+  box-sizing: border-box; /* Include padding in width */
+}
+
+
+/* Align labels properly with inputs */
+.input-label-group {
+  display: flex;
+  align-items: center;
+  gap: 5px; /* Space between input and label */
+  flex-shrink: 0; /* Prevent shrinking of labels */
 }
 
 /* Add Workout and Save Circuit Buttons */
@@ -177,10 +197,11 @@ button:hover {
   gap: 5px; /* Space between input and label */
 }
 
-/* Style for field labels */
+/* Field labels for reps and lbs */
 .field-label {
   font-size: 14px;
   color: #555;
+  white-space: nowrap; /* Prevent labels from breaking */
 }
 
 /* Dark Mode Styles */
