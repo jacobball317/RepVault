@@ -1,6 +1,6 @@
-/* Center the app and give it a card-like appearance */
+/* General App Styling */
 .App {
-  max-width: 400px;
+  max-width: 600px; /* Adjust for more space if needed */
   margin: 20px auto;
   text-align: center;
   padding: 20px;
@@ -8,39 +8,126 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
   font-family: Arial, sans-serif;
+  position: relative; /* To properly position the moon icon */
 }
 
-/* Title section styling */
+/* Dark Mode Toggle */
+.dark-mode-toggle {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #aaa; /* Default grey */
+  transition: color 0.3s ease;
+}
+
+.dark-mode-toggle.active {
+  color: #007bff; /* Blue when active */
+}
+
+/* Title Section Styling */
 h1 {
-  font-size: 1.8rem;
+  font-size: 2rem; /* Slightly larger for better visibility */
   margin-bottom: 20px;
 }
 
-/* Style for form */
-form {
-  margin-bottom: 15px;
+/* Centered Content Wrapper */
+.centered-content {
+  margin: 0 auto;
+  text-align: center;
+  padding: 20px;
 }
 
-/* Input fields for adding workouts */
-input {
-  padding: 8px; /* Reduced padding */
-  width: 60%;
-  margin-right: 8px;
-  border: 1px solid #ccc;
+/* Navigation Buttons */
+nav button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #007bff;
+  color: white;
+  border: none;
   border-radius: 5px;
-  outline: none;
-  transition: border-color 0.3s ease;
-  font-size: 14px; /* Smaller font size */
+  cursor: pointer;
+  margin: 10px;
+  transition: background-color 0.3s ease;
 }
 
-input:focus {
-  border-color: #007bff;
+nav button:hover {
+  background-color: #0056b3;
 }
 
-/* Style for buttons */
+nav a {
+  text-decoration: none;
+  color: white;
+}
+
+/* Timer Section */
+.timer-section {
+  margin-bottom: 20px;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #007bff;
+  display: flex;
+  justify-content: center; /* Center the timer section */
+  align-items: center;
+  gap: 10px; /* Space between timer elements */
+}
+
+.timer-section select {
+  padding: 5px;
+  font-size: 14px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.timer-section button {
+  padding: 5px 10px;
+  font-size: 14px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.timer-section button:hover {
+  background-color: #218838;
+}
+
+/* Workout Item Styling */
+.workout-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 15px;
+  padding: 10px;
+  border: 1px solid #eee;
+  border-radius: 5px;
+  background: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  gap: 10px; /* Space between inputs and buttons */
+}
+
+.workout-card {
+  margin-bottom: 20px;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+}
+
+/* Add Workout and Save Circuit Buttons */
+.bottom-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 20px;
+}
+
 button {
-  padding: 8px 12px; /* Reduced padding */
-  font-size: 14px; /* Smaller font size */
+  padding: 8px 12px;
+  font-size: 14px;
   background-color: #007bff;
   color: white;
   border: none;
@@ -53,92 +140,66 @@ button:hover {
   background-color: #0056b3;
 }
 
-button:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
-}
-
-/* Style for list container */
-ul {
-  list-style-type: none;
-  padding: 0;
-  margin: 15px 0;
-}
-
-/* Style for each set item */
-.set-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 8px; /* Reduced margin */
-  padding: 8px; /* Reduced padding */
-  background: #fff;
-  border: 1px solid #eee;
-  border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-/* Style for labels inside sets */
-.set-item label {
-  font-size: 12px; /* Smaller font */
-  margin-right: 5px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-}
-
-/* Style for small input fields */
-.set-item input {
-  padding: 5px;
-  width: 50px; /* Smaller input fields */
-  margin-top: 4px;
+/* Circuit Name Input */
+.circuit-name-input {
+  font-size: 1.2rem; /* Slightly smaller font size */
+  text-align: center;
+  margin-bottom: 15px;
+  padding: 8px;
+  width: 80%; /* Limit the width */
   border: 1px solid #ccc;
   border-radius: 5px;
-  text-align: center;
+  background-color: white;
+  transition: all 0.3s ease;
 }
 
-/* Style for checkmark button */
-.checkmark-button {
-  padding: 6px; /* Reduced padding */
-  background-color: #28a745; /* Green for done */
+.circuit-name-input:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+  outline: none;
+}
+
+.dark-mode .circuit-name-input {
+  background-color: #555;
   color: white;
-  border: none;
-  border-radius: 50%;
-  font-size: 14px; /* Smaller font size */
-  line-height: 1;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+  border-color: #777;
 }
 
-.checkmark-button:hover {
-  background-color: #218838;
+.dark-mode .circuit-name-input:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.8);
 }
 
-.checkmark-button:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
+/* Group inputs with their labels */
+.input-label-group {
+  display: flex;
+  align-items: center;
+  gap: 5px; /* Space between input and label */
 }
 
-/* Duplicate button styling */
-.duplicate-button {
-  padding: 6px 10px; /* Reduced padding */
-  font-size: 14px; /* Smaller font size */
-  background-color: #007bff;
+/* Style for field labels */
+.field-label {
+  font-size: 14px;
+  color: #555;
+}
+
+/* Dark Mode Styles */
+.dark-mode {
+  background-color: #333;
   color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
 }
 
-.duplicate-button:hover {
-  background-color: #0056b3;
+.dark-mode input {
+  background-color: #555;
+  color: white;
 }
 
-/* Rest timer */
-.RestTimer {
-  font-size: 1em; /* Reduced font size */
-  color: #ff5722;
-  font-weight: bold;
-  margin-top: 10px;
+.dark-mode button {
+  background-color: #555;
+  color: white;
+  border: 1px solid #777;
+}
+
+.dark-mode h1 {
+  color: white;
 }
