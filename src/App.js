@@ -5,7 +5,28 @@ import CircuitList from "./components/CircuitList";
 import "./App.css";
 
 function App() {
-  const [circuits, setCircuits] = useState([]); // List of circuits
+  const [circuits, setCircuits] = useState([
+    {
+      name: "Morning Routine",
+      restTime: 2,
+      cards: [
+        [
+          { name: "Push Ups", reps: 10, weight: 0, done: false },
+          { name: "Squats", reps: 15, weight: 0, done: false },
+        ],
+      ],
+    },
+    {
+      name: "Evening Routine",
+      restTime: 3,
+      cards: [
+        [
+          { name: "Pull Ups", reps: 5, weight: 0, done: false },
+          { name: "Deadlift", reps: 10, weight: 100, done: false },
+        ],
+      ],
+    },
+  ]); // List of circuits
   const [darkMode, setDarkMode] = useState(false); // Dark mode state
 
   // Add a new circuit
@@ -17,6 +38,8 @@ function App() {
   const toggleDarkMode = () => {
     setDarkMode(!darkMode);
   };
+
+  
 
   return (
     <Router>
@@ -83,5 +106,12 @@ function App() {
     </Router>
   );
 }
+
+if (module.hot) {
+  module.hot.accept();
+}
+
+
+console.log("Home Screen Rendered");
 
 export default App;

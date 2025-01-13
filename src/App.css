@@ -1,6 +1,6 @@
-/* General App Styling */
+/* Center the app and give it a card-like appearance */
 .App {
-  max-width: 600px; /* Adjust for more space if needed */
+  max-width: 600px;
   margin: 20px auto;
   text-align: center;
   padding: 20px;
@@ -11,7 +11,7 @@
   position: relative; /* To properly position the moon icon */
 }
 
-/* Dark Mode Toggle */
+/* Dark mode toggle */
 .dark-mode-toggle {
   position: absolute;
   top: 10px;
@@ -26,42 +26,32 @@
   color: #007bff; /* Blue when active */
 }
 
-/* Title Section Styling */
+/* Title section styling */
 h1 {
   font-size: 2rem; /* Slightly larger for better visibility */
   margin-bottom: 20px;
+  text-align: center;
 }
 
-/* Centered Content Wrapper */
+/* Editable circuit name styling */
+.circuit-name-input {
+  font-size: 1.5rem;
+  text-align: center;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #fff;
+  color: #333;
+}
+
+/* Centered content wrapper */
 .centered-content {
   margin: 0 auto;
   text-align: center;
   padding: 20px;
 }
 
-/* Navigation Buttons */
-nav button {
-  padding: 10px 20px;
-  font-size: 16px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  margin: 10px;
-  transition: background-color 0.3s ease;
-}
-
-nav button:hover {
-  background-color: #0056b3;
-}
-
-nav a {
-  text-decoration: none;
-  color: white;
-}
-
-/* Timer Section */
+/* Style for the timer section */
 .timer-section {
   margin-bottom: 20px;
   font-size: 1rem;
@@ -95,7 +85,24 @@ nav a {
   background-color: #218838;
 }
 
-/* Workout Item Styling */
+/* Workout card styling */
+.workout-card {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 20px;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.dark-mode .workout-card {
+  background-color: #444;
+}
+
+/* Workout item styling */
 .workout-item {
   display: flex;
   align-items: center;
@@ -107,17 +114,55 @@ nav a {
   background: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   gap: 10px; /* Space between inputs and buttons */
+  flex-wrap: wrap;
 }
 
-.workout-card {
-  margin-bottom: 20px;
-  padding: 15px;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  background-color: #f9f9f9;
+.workout-item input {
+  width: 80px;
+  padding: 5px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
 }
 
-/* Add Workout and Save Circuit Buttons */
+.workout-item .input-label-group {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.workout-item .field-label {
+  font-size: 14px;
+  color: #555;
+}
+
+.workout-item button {
+  background-color: #ccc;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.workout-item button.active {
+  background-color: #28a745;
+}
+
+.workout-item button:hover {
+  background-color: #007bff;
+}
+
+/* Chart container inside workout cards */
+.chart-container {
+  margin-top: 10px;
+}
+
+/* Buttons at the bottom */
 .bottom-buttons {
   display: flex;
   justify-content: center;
@@ -140,50 +185,6 @@ button:hover {
   background-color: #0056b3;
 }
 
-/* Circuit Name Input */
-.circuit-name-input {
-  font-size: 1.2rem; /* Slightly smaller font size */
-  text-align: center;
-  margin-bottom: 15px;
-  padding: 8px;
-  width: 80%; /* Limit the width */
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  background-color: white;
-  transition: all 0.3s ease;
-}
-
-.circuit-name-input:focus {
-  border-color: #007bff;
-  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
-  outline: none;
-}
-
-.dark-mode .circuit-name-input {
-  background-color: #555;
-  color: white;
-  border-color: #777;
-}
-
-.dark-mode .circuit-name-input:focus {
-  border-color: #007bff;
-  box-shadow: 0 0 5px rgba(0, 123, 255, 0.8);
-}
-
-/* Group inputs with their labels */
-.input-label-group {
-  display: flex;
-  align-items: center;
-  gap: 5px; /* Space between input and label */
-}
-
-/* Style for field labels */
-.field-label {
-  font-size: 14px;
-  color: #555;
-}
-
-/* Dark Mode Styles */
 .dark-mode {
   background-color: #333;
   color: white;
@@ -202,4 +203,46 @@ button:hover {
 
 .dark-mode h1 {
   color: white;
+}
+
+.dark-mode .field-label {
+  color: #ccc;
+}
+
+.field-label {
+  font-size: 14px;
+  color: #555;
+  white-space: nowrap; /* Prevent labels from breaking */
+}
+
+.home-container {
+  text-align: center;
+  padding: 20px;
+}
+
+nav {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+nav button {
+  padding: 10px 15px;
+  font-size: 16px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+nav button:hover {
+  background-color: #0056b3;
+}
+
+.workout-card {
+  max-width: 100%;
+  width: calc(100% - 20px);
+  box-sizing: border-box;
 }
