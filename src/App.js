@@ -53,6 +53,11 @@ function App() {
               />
             }
           />
+          {/* Handle undefined routes */}
+          <Route
+            path="*"
+            element={<h2>Page Not Found. <Link to="/">Go Home</Link></h2>}
+          />
         </Routes>
       </div>
     </Router>
