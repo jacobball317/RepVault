@@ -1,15 +1,22 @@
 import React, { useState, useEffect } from "react";
 
-function CircuitForm({ addCircuit, totalCircuits, darkMode, toggleDarkMode }) {
+function CircuitForm({ addCircuit, darkMode, toggleDarkMode }) {
   const [circuitName, setCircuitName] = useState(""); // Circuit name
   const [cards, setCards] = useState([]); // Cards containing workouts
   const [isEditingName, setIsEditingName] = useState(false); // Editing circuit name state
   const [restTime, setRestTime] = useState(1); // Rest time in minutes
   const [timer, setTimer] = useState(null); // Timer for rest countdown
 
-  // Add a new workout to a new card
-  const addWorkout = () => {
-    setCards([...cards, [{ name: "Abs", reps: 10, weight: 50, done: false }]]);
+  // Add a new card with an initial workout
+  const addCard = () => {
+    setCards([...cards, [{ name: "New Workout", reps: 10, weight: 50, done: false }]]);
+  };
+
+  // Add a new workout to an existing card
+  const addWorkoutToCard = (cardIndex) => {
+    const updatedCards = [...cards];
+    updatedCards[cardIndex].push({ name: "New Workout", reps: 10, weight: 50, done: false });
+    setCards(updatedCards);
   };
 
   // Update a specific workout in a specific card
@@ -19,34 +26,19 @@ function CircuitForm({ addCircuit, totalCircuits, darkMode, toggleDarkMode }) {
     setCards(updatedCards);
   };
 
-  // Toggle workout completion and start the rest timer
+  // Toggle workout completion without adding a duplicate
   const toggleWorkoutDone = (cardIndex, workoutIndex) => {
     const updatedCards = [...cards];
-    const workout = updatedCards[cardIndex][workoutIndex];
-
-    workout.done = !workout.done; // Toggle done status
+    updatedCards[cardIndex][workoutIndex].done = !updatedCards[cardIndex][workoutIndex].done;
     setCards(updatedCards);
-
-    if (workout.done) {
+    if (updatedCards[cardIndex][workoutIndex].done) {
       startRestTimer();
-
-      // Duplicate the workout
-      const duplicatedWorkout = { ...workout, done: false };
-      updatedCards[cardIndex].push(duplicatedWorkout);
-      setCards(updatedCards);
     }
   };
 
   // Start the rest timer
   const startRestTimer = () => {
     setTimer(restTime * 60); // Convert minutes to seconds
-  };
-
-  // Add one minute to the timer
-  const addOneMinute = () => {
-    setTimer((prevTimer) =>
-      prevTimer !== null ? prevTimer + 60 : restTime * 60 + 60
-    );
   };
 
   // Countdown effect for the rest timer
@@ -68,7 +60,7 @@ function CircuitForm({ addCircuit, totalCircuits, darkMode, toggleDarkMode }) {
     setIsEditingName(false);
   };
 
-  // Save the circuit when user finishes adding workouts
+  // Save the circuit when the user finishes adding workouts
   const saveCircuit = () => {
     addCircuit({ name: circuitName || "name", cards, restTime });
     setCircuitName("");
@@ -128,7 +120,6 @@ function CircuitForm({ addCircuit, totalCircuits, darkMode, toggleDarkMode }) {
             </option>
           ))}
         </select>
-        <button onClick={addOneMinute}>+1 min</button>
       </div>
 
       {/* Workout Cards */}
@@ -197,12 +188,26 @@ function CircuitForm({ addCircuit, totalCircuits, darkMode, toggleDarkMode }) {
               </button>
             </div>
           ))}
+          <button
+            onClick={() => addWorkoutToCard(cardIndex)}
+            style={{
+              marginTop: "10px",
+              backgroundColor: "#007bff",
+              color: "white",
+              border: "none",
+              borderRadius: "8px",
+              padding: "5px 10px",
+              cursor: "pointer",
+            }}
+          >
+            + Add Workout
+          </button>
         </div>
       ))}
 
       {/* Buttons at the Bottom */}
       <div className="bottom-buttons">
-        <button onClick={addWorkout}>Add Workout</button>
+        <button onClick={addCard}>Add Card</button>
         <button onClick={saveCircuit}>Save Circuit</button>
       </div>
     </div>
