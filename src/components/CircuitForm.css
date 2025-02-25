@@ -140,4 +140,41 @@ margin: 10px 0;
 overflow: hidden;
 }
 
+/* === Mobile Responsive Design === */
+@media (max-width: 768px) {
+  .workout-container {
+    padding: 10px;
+    align-items: center;
+  }
+
+  .workout-card {
+    width: 95%;
+    padding: 15px;
+  }
+
+  .set-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .set-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .neon-input {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .neon-btn {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .progress-container {
+    width: 100%;
+  }
+}
+
 

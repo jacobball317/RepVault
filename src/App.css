@@ -197,6 +197,10 @@ body {
 
 /* === Mobile Responsive Design === */
 @media (max-width: 768px) {
+  body {
+    padding: 10px;
+  }
+
   .glass-card {
     width: 95%;
     padding: 20px;
@@ -209,5 +213,18 @@ body {
 
   .neon-btn {
     width: 100%;
+  }
+
+  .dark-mode-toggle {
+    top: 10px;
+    right: 10px;
+  }
+
+  .home-btn {
+    margin-bottom: 10px;
+  }
+
+  .home-container {
+    padding: 10px;
   }
 }
