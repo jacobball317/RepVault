@@ -1,0 +1,134 @@
+/* === Global Input Fields === */
+.neon-input {
+background: rgba(255, 255, 255, 0.1); /* Subtle transparency */
+border: 2px solid rgba(255, 255, 255, 0.2);
+color: white;
+font-size: 1rem;
+padding: 10px;
+border-radius: 8px;
+text-align: center;
+outline: none;
+transition: all 0.3s ease-in-out;
+width: 80px;
+box-shadow: 0 0 10px rgba(0, 229, 255, 0.3);
+}
+
+.neon-input:focus {
+border-color: #00E5FF;
+box-shadow: 0 0 12px #00E5FF, 0 0 24px #FF00A6;
+}
+
+/* === Workout & Set Containers === */
+.workout-container {
+display: flex;
+flex-direction: column;
+align-items: center;
+width: 100%;
+padding: 20px;
+}
+
+.workout-card {
+background: rgba(255, 255, 255, 0.08);
+backdrop-filter: blur(10px);
+border-radius: 12px;
+padding: 20px;
+margin-bottom: 20px;
+width: 90%;
+max-width: 500px;
+text-align: center;
+box-shadow: 0 4px 20px rgba(0, 229, 255, 0.2);
+}
+
+/* === Set Input Row === */
+.set-item {
+display: flex;
+align-items: center;
+justify-content: space-evenly;
+margin: 10px 0;
+}
+
+/* === Button Styling === */
+.neon-btn {
+background: linear-gradient(90deg, #FF00A6, #00E5FF);
+color: white;
+font-weight: bold;
+padding: 12px 24px;
+border-radius: 8px;
+cursor: pointer;
+text-align: center;
+transition: 0.3s;
+border: none;
+font-size: 1rem;
+}
+
+.neon-btn:hover {
+transform: scale(1.05);
+box-shadow: 0 0 10px #00E5FF, 0 0 20px #FF00A6;
+}
+
+/* === Progress Bar for Timer === */
+.progress-container {
+width: 80%;
+height: 10px;
+background: rgba(255, 255, 255, 0.2);
+border-radius: 5px;
+margin: 10px 0;
+overflow: hidden;
+}
+
+.progress-bar {
+height: 100%;
+background: linear-gradient(90deg, #FF00A6, #00E5FF);
+transition: width 1s linear;
+}
+
+/* === Input Labels & Formatting === */
+.set-header {
+display: flex;
+justify-content: space-evenly;
+font-weight: bold;
+margin-bottom: 5px;
+color: rgba(255, 255, 255, 0.8);
+}
+
+.set-item {
+display: flex;
+align-items: center;
+justify-content: space-evenly;
+margin: 10px 0;
+}
+
+.set-number {
+font-weight: bold;
+color: rgba(255, 255, 255, 0.8);
+}
+
+/* === Checkmark Animation === */
+.checkmark-btn {
+background: rgba(255, 255, 255, 0.1);
+border: 2px solid rgba(255, 255, 255, 0.2);
+color: white;
+font-size: 1.2rem;
+padding: 8px;
+border-radius: 50%;
+cursor: pointer;
+transition: all 0.3s ease-in-out;
+}
+
+.checkmark-btn.completed {
+background: #00FF00;
+box-shadow: 0 0 10px #00FF00;
+color: black;
+}
+
+/* === Timer Progress Bar === */
+.progress-container {
+width: 80%;
+height: 10px;
+background: rgba(255, 255, 255, 0.2);
+border-radius: 5px;
+margin: 10px 0;
+overflow: hidden;
+}
+
+

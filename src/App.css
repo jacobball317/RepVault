@@ -1,248 +1,143 @@
-/* Center the app and give it a card-like appearance */
-.App {
-  max-width: 600px;
-  margin: 20px auto;
-  text-align: center;
-  padding: 20px;
-  background: #f9f9f9;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
-  font-family: Arial, sans-serif;
-  position: relative; /* To properly position the moon icon */
-}
-
-/* Dark mode toggle */
-.dark-mode-toggle {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  font-size: 1.5rem;
-  cursor: pointer;
-  color: #aaa; /* Default grey */
-  transition: color 0.3s ease;
-}
-
-.dark-mode-toggle.active {
-  color: #007bff; /* Blue when active */
-}
-
-/* Title section styling */
-h1 {
-  font-size: 2rem; /* Slightly larger for better visibility */
-  margin-bottom: 20px;
-  text-align: center;
-}
-
-/* Editable circuit name styling */
-.circuit-name-input {
-  font-size: 1.5rem;
-  text-align: center;
-  padding: 5px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  background-color: #fff;
-  color: #333;
-}
-
-/* Centered content wrapper */
-.centered-content {
-  margin: 0 auto;
-  text-align: center;
-  padding: 20px;
-}
-
-/* Style for the timer section */
-.timer-section {
-  margin-bottom: 20px;
-  font-size: 1rem;
-  font-weight: bold;
-  color: #007bff;
-  display: flex;
-  justify-content: center; /* Center the timer section */
-  align-items: center;
-  gap: 10px; /* Space between timer elements */
-}
-
-.timer-section select {
-  padding: 5px;
-  font-size: 14px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-}
-
-.timer-section button {
-  padding: 5px 10px;
-  font-size: 14px;
-  background-color: #28a745;
+/* === Global Styles === */
+body {
+  background-color: #0a0a0a;
   color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.timer-section button:hover {
-  background-color: #218838;
-}
-
-/* Workout card styling */
-.workout-card {
+  font-family: 'Poppins', sans-serif;
   display: flex;
-  flex-direction: column;
-  gap: 15px;
-  margin-bottom: 20px;
-  padding: 15px;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  background-color: #f9f9f9;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.dark-mode .workout-card {
-  background-color: #444;
-}
-
-/* Workout item styling */
-.workout-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: 15px;
-  padding: 10px;
-  border: 1px solid #eee;
-  border-radius: 5px;
-  background: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  gap: 10px; /* Space between inputs and buttons */
-  flex-wrap: wrap;
-}
-
-.workout-item input {
-  width: 80px;
-  padding: 5px;
-  font-size: 14px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-.workout-item .input-label-group {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-
-.workout-item .field-label {
-  font-size: 14px;
-  color: #555;
-}
-
-.workout-item button {
-  background-color: #ccc;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  width: 30px;
-  height: 30px;
-  display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  overflow: hidden;
 }
 
-.workout-item button.active {
-  background-color: #28a745;
+/* === Background Animation === */
+.background-animation {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  overflow: hidden;
 }
 
-.workout-item button:hover {
-  background-color: #007bff;
+.orb {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(0,229,255,0.8), transparent);
+  border-radius: 50%;
+  top: 20%;
+  left: 10%;
+  filter: blur(70px);
+  animation: float 10s infinite ease-in-out;
 }
 
-/* Chart container inside workout cards */
-.chart-container {
-  margin-top: 10px;
+.orb.small {
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(circle, rgba(255,0,166,0.8), transparent);
+  top: 60%;
+  left: 70%;
+  animation-duration: 15s;
 }
 
-/* Buttons at the bottom */
-.bottom-buttons {
+@keyframes float {
+  0% { transform: translateY(0px) scale(1); }
+  50% { transform: translateY(-40px) scale(1.1); }
+  100% { transform: translateY(0px) scale(1); }
+}
+
+/* === Home Container === */
+.home-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+/* === Glassmorphism Card === */
+.glass-card {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(15px);
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 4px 20px rgba(0, 229, 255, 0.3);
+  text-align: center;
+  max-width: 500px;
+  width: 90%;
+}
+
+/* === Neon Title === */
+.neon-title {
+  font-size: 3rem;
+  font-weight: bold;
+  background: linear-gradient(90deg, #00E5FF, #FF00A6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* === Subtitle Text === */
+.subtext {
+  font-size: 1.2rem;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 20px;
+}
+
+/* === Button Container === */
+.button-container {
   display: flex;
   justify-content: center;
   gap: 15px;
   margin-top: 20px;
 }
 
-button {
-  padding: 8px 12px;
-  font-size: 14px;
-  background-color: #007bff;
+/* === Neon Buttons === */
+.neon-btn {
+  background: linear-gradient(90deg, #FF00A6, #00E5FF);
   color: white;
+  font-weight: bold;
+  text-decoration: none;
   border: none;
-  border-radius: 5px;
+  padding: 12px 24px;
+  border-radius: 8px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-button:hover {
-  background-color: #0056b3;
-}
-
-.dark-mode {
-  background-color: #333;
-  color: white;
-}
-
-.dark-mode input {
-  background-color: #555;
-  color: white;
-}
-
-.dark-mode button {
-  background-color: #555;
-  color: white;
-  border: 1px solid #777;
-}
-
-.dark-mode h1 {
-  color: white;
-}
-
-.dark-mode .field-label {
-  color: #ccc;
-}
-
-.field-label {
-  font-size: 14px;
-  color: #555;
-  white-space: nowrap; /* Prevent labels from breaking */
-}
-
-.home-container {
+  transition: 0.3s ease-in-out;
+  font-size: 1rem;
   text-align: center;
-  padding: 20px;
 }
 
-nav {
-  display: flex;
-  justify-content: center;
-  gap: 15px;
-  margin-bottom: 20px;
+.neon-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 15px #00E5FF, 0 0 25px #FF00A6;
 }
 
-nav button {
-  padding: 10px 15px;
-  font-size: 16px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 5px;
+/* === Dark Mode Toggle === */
+.dark-mode-toggle {
   cursor: pointer;
+  font-size: 2rem;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  transition: all 0.3s ease-in-out;
 }
 
-nav button:hover {
-  background-color: #0056b3;
+.dark-mode-toggle:hover {
+  filter: drop-shadow(0 0 5px #00E5FF);
 }
 
-.workout-card {
-  max-width: 100%;
-  width: calc(100% - 20px);
-  box-sizing: border-box;
+/* === Mobile Responsive Design === */
+@media (max-width: 768px) {
+  .glass-card {
+    width: 95%;
+    padding: 20px;
+  }
+
+  .button-container {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .neon-btn {
+    width: 100%;
+  }
 }

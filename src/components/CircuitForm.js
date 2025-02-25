@@ -1,44 +1,55 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import "./CircuitForm.css";
 
 function CircuitForm({ addCircuit, darkMode, toggleDarkMode }) {
-  const [circuitName, setCircuitName] = useState(""); // Circuit name
-  const [cards, setCards] = useState([]); // Cards containing workouts
-  const [isEditingName, setIsEditingName] = useState(false); // Editing circuit name state
-  const [restTime, setRestTime] = useState(1); // Rest time in minutes
-  const [timer, setTimer] = useState(null); // Timer for rest countdown
+  const [circuitName, setCircuitName] = useState("Workout1");
+  const [workouts, setWorkouts] = useState([]);
+  const [isEditingName, setIsEditingName] = useState(false);
+  const [restTime, setRestTime] = useState(1);
+  const [timer, setTimer] = useState(null);
 
-  // Add a new card with an initial workout
-  const addCard = () => {
-    setCards([...cards, [{ name: "New Workout", reps: 10, weight: 50, done: false }]]);
+  // Add a new workout with an initial set
+  const addWorkout = () => {
+    setWorkouts([
+      ...workouts,
+      { name: "New Workout", sets: [{ reps: 10, weight: 50, done: false }] },
+    ]);
   };
 
-  // Add a new workout to an existing card
-  const addWorkoutToCard = (cardIndex) => {
-    const updatedCards = [...cards];
-    updatedCards[cardIndex].push({ name: "New Workout", reps: 10, weight: 50, done: false });
-    setCards(updatedCards);
+  // Add a new set to an existing workout
+  const addSetToWorkout = (workoutIndex) => {
+    const updatedWorkouts = [...workouts];
+    updatedWorkouts[workoutIndex].sets.push({
+      reps: 10,
+      weight: 50,
+      done: false,
+    });
+    setWorkouts(updatedWorkouts);
   };
 
-  // Update a specific workout in a specific card
-  const updateWorkout = (cardIndex, workoutIndex, field, value) => {
-    const updatedCards = [...cards];
-    updatedCards[cardIndex][workoutIndex][field] = value;
-    setCards(updatedCards);
+  // Update a specific set in a workout
+  const updateSet = (workoutIndex, setIndex, field, value) => {
+    const updatedWorkouts = [...workouts];
+    updatedWorkouts[workoutIndex].sets[setIndex][field] = value;
+    setWorkouts(updatedWorkouts);
   };
 
-  // Toggle workout completion without adding a duplicate
-  const toggleWorkoutDone = (cardIndex, workoutIndex) => {
-    const updatedCards = [...cards];
-    updatedCards[cardIndex][workoutIndex].done = !updatedCards[cardIndex][workoutIndex].done;
-    setCards(updatedCards);
-    if (updatedCards[cardIndex][workoutIndex].done) {
+  // Toggle set completion with animation
+  const toggleSetDone = (workoutIndex, setIndex) => {
+    const updatedWorkouts = [...workouts];
+    const set = updatedWorkouts[workoutIndex].sets[setIndex];
+    set.done = !set.done;
+    setWorkouts(updatedWorkouts);
+
+    if (set.done) {
       startRestTimer();
     }
   };
 
   // Start the rest timer
   const startRestTimer = () => {
-    setTimer(restTime * 60); // Convert minutes to seconds
+    setTimer(restTime * 60);
   };
 
   // Countdown effect for the rest timer
@@ -49,22 +60,14 @@ function CircuitForm({ addCircuit, darkMode, toggleDarkMode }) {
       setTimer((prevTimer) => (prevTimer > 0 ? prevTimer - 1 : 0));
     }, 1000);
 
-    return () => clearInterval(interval); // Cleanup on unmount
+    return () => clearInterval(interval);
   }, [timer]);
 
-  // Save the circuit name automatically when editing ends
-  const handleNameBlur = () => {
-    if (circuitName.trim() === "") {
-      setCircuitName("name"); // Default back to "name" only on blur if input is empty
-    }
-    setIsEditingName(false);
-  };
-
-  // Save the circuit when the user finishes adding workouts
+  // Save the workout circuit
   const saveCircuit = () => {
-    addCircuit({ name: circuitName || "name", cards, restTime });
-    setCircuitName("");
-    setCards([]);
+    addCircuit({ name: circuitName, workouts, restTime });
+    setCircuitName("Workout1");
+    setWorkouts([]);
   };
 
   // Format time for display (MM:SS)
@@ -75,42 +78,37 @@ function CircuitForm({ addCircuit, darkMode, toggleDarkMode }) {
   };
 
   return (
-    <div className="centered-content">
-      {/* Dark Mode Toggle */}
-      <span
-        className={`dark-mode-toggle ${darkMode ? "active" : ""}`}
-        onClick={toggleDarkMode}
-      >
+    <div className="workout-container">
+      <span className="dark-mode-toggle" onClick={toggleDarkMode}>
         🌙
       </span>
 
-      {/* Editable Circuit Name */}
-      <h2
-        onClick={() => setIsEditingName(true)}
-        style={{
-          cursor: "pointer",
-          marginBottom: "10px",
-          color: circuitName ? (darkMode ? "white" : "#333") : "#aaa",
-        }}
-      >
+      <Link to="/" className="home-btn">
+        🏠 Home
+      </Link>
+
+      <h2 className="neon-title" onClick={() => setIsEditingName(true)}>
         {isEditingName ? (
           <input
             type="text"
             value={circuitName}
             onChange={(e) => setCircuitName(e.target.value)}
-            onBlur={handleNameBlur}
+            onBlur={() => setIsEditingName(false)}
             autoFocus
-            className="circuit-name-input"
+            className="neon-input"
           />
         ) : (
-          circuitName || "name"
+          circuitName
         )}
       </h2>
 
-      {/* Rest Timer */}
+      {/* Rest Timer UI */}
       <div className="timer-section">
-        Rest Timer: {timer !== null && timer > 0 ? formatTime(timer) : "Ready"}
+        <p className="rest-timer-text">
+          Rest Timer: <strong>{timer !== null && timer > 0 ? formatTime(timer) : "Ready"}</strong>
+        </p>
         <select
+          className="dropdown"
           value={restTime}
           onChange={(e) => setRestTime(Number(e.target.value))}
         >
@@ -122,93 +120,60 @@ function CircuitForm({ addCircuit, darkMode, toggleDarkMode }) {
         </select>
       </div>
 
-      {/* Workout Cards */}
-      {cards.map((workouts, cardIndex) => (
+      {/* Progress Bar for Rest Timer */}
+      <div className="progress-container">
         <div
-          key={cardIndex}
-          className="workout-card"
-          style={{
-            marginBottom: "20px",
-            padding: "15px",
-            border: "1px solid #ddd",
-            borderRadius: "10px",
-            backgroundColor: darkMode ? "#444" : "#f9f9f9",
-          }}
-        >
-          {workouts.map((workout, index) => (
-            <div key={index} className="workout-item">
+          className="progress-bar"
+          style={{ width: `${(timer / (restTime * 60)) * 100}%` }}
+        ></div>
+      </div>
+
+      {/* Workout Section */}
+      {workouts.map((workout, workoutIndex) => (
+        <div key={workoutIndex} className="workout-card">
+          <h3 className="workout-title">{workout.name}</h3>
+          <div className="set-header">
+            <p>Set</p>
+            <p>Weight (lbs)</p>
+            <p>Reps</p>
+            <p>Done</p>
+          </div>
+          {workout.sets.map((set, setIndex) => (
+            <div key={setIndex} className="set-item">
+              <p className="set-number">{setIndex + 1}</p>
               <input
-                type="text"
-                placeholder="Workout Name"
-                value={workout.name}
-                onChange={(e) =>
-                  updateWorkout(cardIndex, index, "name", e.target.value)
-                }
-                style={{ flex: 2 }}
+                type="number"
+                value={set.weight}
+                onChange={(e) => updateSet(workoutIndex, setIndex, "weight", e.target.value)}
+                className="neon-input"
               />
-              <div className="input-label-group">
-                <input
-                  type="number"
-                  placeholder="Reps"
-                  value={workout.reps}
-                  onChange={(e) =>
-                    updateWorkout(cardIndex, index, "reps", e.target.value)
-                  }
-                />
-                <span className="field-label">Reps</span>
-              </div>
-              <div className="input-label-group">
-                <input
-                  type="number"
-                  placeholder="Weight"
-                  value={workout.weight}
-                  onChange={(e) =>
-                    updateWorkout(cardIndex, index, "weight", e.target.value)
-                  }
-                />
-                <span className="field-label">Lbs</span>
-              </div>
+              <input
+                type="number"
+                value={set.reps}
+                onChange={(e) => updateSet(workoutIndex, setIndex, "reps", e.target.value)}
+                className="neon-input"
+              />
               <button
-                onClick={() => toggleWorkoutDone(cardIndex, index)}
-                style={{
-                  backgroundColor: workout.done ? "#28a745" : "#ccc",
-                  color: "white",
-                  border: "none",
-                  borderRadius: "8px",
-                  cursor: "pointer",
-                  width: "30px",
-                  height: "30px",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  marginLeft: "10px",
-                }}
+                className={`checkmark-btn ${set.done ? "completed" : ""}`}
+                onClick={() => toggleSetDone(workoutIndex, setIndex)}
               >
                 ✓
               </button>
             </div>
           ))}
-          <button
-            onClick={() => addWorkoutToCard(cardIndex)}
-            style={{
-              marginTop: "10px",
-              backgroundColor: "#007bff",
-              color: "white",
-              border: "none",
-              borderRadius: "8px",
-              padding: "5px 10px",
-              cursor: "pointer",
-            }}
-          >
-            + Add Workout
+          <button className="neon-btn" onClick={() => addSetToWorkout(workoutIndex)}>
+            + Add Set
           </button>
         </div>
       ))}
 
-      {/* Buttons at the Bottom */}
-      <div className="bottom-buttons">
-        <button onClick={addCard}>Add Card</button>
-        <button onClick={saveCircuit}>Save Circuit</button>
+      <div className="button-container">
+        <button className="neon-btn" onClick={addWorkout}>
+          + Add Workout
+        </button>
+        <button className="neon-btn" onClick={saveCircuit}>
+          Save Circuit
+        </button>
       </div>
     </div>
   );
