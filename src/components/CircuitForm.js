@@ -35,6 +35,13 @@ function CircuitForm({ addCircuit, darkMode, toggleDarkMode }) {
     setWorkouts(updatedWorkouts);
   };
 
+  // Update workout name
+  const updateWorkoutName = (index, name) => {
+    const updatedWorkouts = [...workouts];
+    updatedWorkouts[index].name = name;
+    setWorkouts(updatedWorkouts);
+  };
+
   // Toggle set completion with animation
   const toggleSetDone = (workoutIndex, setIndex) => {
     const updatedWorkouts = [...workouts];
@@ -83,7 +90,7 @@ function CircuitForm({ addCircuit, darkMode, toggleDarkMode }) {
         🌙
       </span>
 
-      <Link to="/" className="home-btn">
+      <Link to="/" className="neon-btn home-btn">
         🏠 Home
       </Link>
 
@@ -103,7 +110,7 @@ function CircuitForm({ addCircuit, darkMode, toggleDarkMode }) {
       </h2>
 
       {/* Rest Timer UI */}
-      <div className="timer-section">
+      <div className="timer-section centered">
         <p className="rest-timer-text">
           Rest Timer: <strong>{timer !== null && timer > 0 ? formatTime(timer) : "Ready"}</strong>
         </p>
@@ -131,7 +138,12 @@ function CircuitForm({ addCircuit, darkMode, toggleDarkMode }) {
       {/* Workout Section */}
       {workouts.map((workout, workoutIndex) => (
         <div key={workoutIndex} className="workout-card">
-          <h3 className="workout-title">{workout.name}</h3>
+          <input
+            type="text"
+            value={workout.name}
+            onChange={(e) => updateWorkoutName(workoutIndex, e.target.value)}
+            className="neon-input workout-name-input"
+          />
           <div className="set-header">
             <p>Set</p>
             <p>Weight (lbs)</p>

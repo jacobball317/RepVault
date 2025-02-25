@@ -1,0 +1,76 @@
+.laser-background {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.laser {
+  position: absolute;
+  width: 2px;
+  height: 100vh;
+  background: linear-gradient(180deg, rgba(255,0,166,0.8), transparent);
+  animation: laser-animation 5s infinite;
+}
+
+.laser1 {
+  left: 5%;
+  animation-delay: 0s;
+}
+
+.laser2 {
+  left: 15%;
+  animation-delay: 0.5s;
+}
+
+.laser3 {
+  left: 25%;
+  animation-delay: 1s;
+}
+
+.laser4 {
+  left: 35%;
+  animation-delay: 1.5s;
+}
+
+.laser5 {
+  left: 45%;
+  animation-delay: 2s;
+}
+
+.laser6 {
+  left: 55%;
+  animation-delay: 2.5s;
+}
+
+.laser7 {
+  left: 65%;
+  animation-delay: 3s;
+}
+
+.laser8 {
+  left: 75%;
+  animation-delay: 3.5s;
+}
+
+.laser9 {
+  left: 85%;
+  animation-delay: 4s;
+}
+
+.laser10 {
+  left: 95%;
+  animation-delay: 4.5s;
+}
+
+@keyframes laser-animation {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-100vh);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}

@@ -61,10 +61,52 @@ body {
   backdrop-filter: blur(15px);
   padding: 30px;
   border-radius: 15px;
-  box-shadow: 0 4px 20px rgba(0, 229, 255, 0.3);
   text-align: center;
   max-width: 500px;
   width: 90%;
+  position: relative;
+}
+
+.glass-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 15px;
+  border: 5px solid;
+  border-image: linear-gradient(90deg, rgba(0, 229, 255, 0.8), rgba(255, 0, 166, 0.8)) 1;
+  filter: blur(10px);
+  z-index: -1;
+  animation: color-change 5s infinite alternate;
+}
+
+@keyframes rotate-glow {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes glow {
+  0% {
+    box-shadow: 0 0 20px rgba(0, 229, 255, 0.3), 0 0 40px rgba(255, 0, 166, 0.3);
+  }
+  100% {
+    box-shadow: 0 0 40px rgba(0, 229, 255, 0.6), 0 0 80px rgba(255, 0, 166, 0.6);
+  }
+}
+
+@keyframes color-change {
+  0%, 100% {
+    border-image: linear-gradient(90deg, rgba(0, 229, 255, 0.8), rgba(255, 0, 166, 0.8)) 1;
+  }
+  50% {
+    border-image: linear-gradient(90deg, rgba(255, 0, 166, 0.8), rgba(0, 229, 255, 0.8)) 1;
+  }
 }
 
 /* === Neon Title === */
@@ -123,6 +165,34 @@ body {
 
 .dark-mode-toggle:hover {
   filter: drop-shadow(0 0 5px #00E5FF);
+}
+
+/* Centered Timer Section */
+.centered {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Home Button Styling */
+.home-btn {
+  background: linear-gradient(90deg, #FF00A6, #00E5FF);
+  color: white;
+  font-weight: bold;
+  text-decoration: none;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+  font-size: 1rem;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.home-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 15px #00E5FF, 0 0 25px #FF00A6;
 }
 
 /* === Mobile Responsive Design === */

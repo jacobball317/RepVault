@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Routes, Route, Link } from "react-router-dom";
 import CircuitForm from "./components/CircuitForm";
+import LaserBackground from "./components/LaserBackground";
 import "./App.css";
 
 function App() {
@@ -21,25 +22,23 @@ function App() {
     <div className={`App ${darkMode ? "dark-mode" : ""}`}>
       <span className="dark-mode-toggle" onClick={toggleDarkMode}>🌙</span>
 
-      <div className="background-animation">
-        <div className="orb"></div>
-        <div className="orb small"></div>
-      </div>
-
       <Routes>
         <Route
           path="/"
           element={
-            <div className="home-container">
-              <div className="glass-card">
-                <h1 className="neon-title">Rep Vault</h1>
-                <p className="subtext">Your Personal Workout Tracker</p>
-                <div className="button-container">
-                  <Link to="/create-circuit" className="neon-btn">Create Circuit</Link>
-                  <button className="neon-btn" onClick={loadCircuits}>Load Circuits</button>
+            <>
+              <LaserBackground />
+              <div className="home-container">
+                <div className="glass-card">
+                  <h1 className="neon-title">Rep Vault</h1>
+                  <p className="subtext">Your Personal Workout Tracker</p>
+                  <div className="button-container">
+                    <Link to="/create-circuit" className="neon-btn">Create Circuit</Link>
+                    <button className="neon-btn" onClick={loadCircuits}>Load Circuits</button>
+                  </div>
                 </div>
               </div>
-            </div>
+            </>
           }
         />
         <Route path="/create-circuit" element={<CircuitForm darkMode={darkMode} toggleDarkMode={toggleDarkMode} />} />

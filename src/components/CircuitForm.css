@@ -39,6 +39,15 @@ text-align: center;
 box-shadow: 0 4px 20px rgba(0, 229, 255, 0.2);
 }
 
+/* Workout Name Input */
+.workout-name-input {
+  width: 100%;
+  margin-bottom: 10px;
+  font-size: 1.2rem;
+  text-align: center;
+  box-sizing: border-box; /* Ensure padding and border are included in the element's total width and height */
+}
+
 /* === Set Input Row === */
 .set-item {
 display: flex;
