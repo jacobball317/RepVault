@@ -1,180 +1,214 @@
 /* === Global Input Fields === */
 .neon-input {
-background: rgba(255, 255, 255, 0.1); /* Subtle transparency */
-border: 2px solid rgba(255, 255, 255, 0.2);
-color: white;
-font-size: 1rem;
-padding: 10px;
-border-radius: 8px;
-text-align: center;
-outline: none;
-transition: all 0.3s ease-in-out;
-width: 80px;
-box-shadow: 0 0 10px rgba(0, 229, 255, 0.3);
-}
-
-.neon-input:focus {
-border-color: #00E5FF;
-box-shadow: 0 0 12px #00E5FF, 0 0 24px #FF00A6;
-}
-
-/* === Workout & Set Containers === */
-.workout-container {
-display: flex;
-flex-direction: column;
-align-items: center;
-width: 100%;
-padding: 20px;
-}
-
-.workout-card {
-background: rgba(255, 255, 255, 0.08);
-backdrop-filter: blur(10px);
-border-radius: 12px;
-padding: 20px;
-margin-bottom: 20px;
-width: 90%;
-max-width: 500px;
-text-align: center;
-box-shadow: 0 4px 20px rgba(0, 229, 255, 0.2);
-}
-
-/* Workout Name Input */
-.workout-name-input {
-  width: 100%;
-  margin-bottom: 10px;
-  font-size: 1.2rem;
-  text-align: center;
-  box-sizing: border-box; /* Ensure padding and border are included in the element's total width and height */
-}
-
-/* === Set Input Row === */
-.set-item {
-display: flex;
-align-items: center;
-justify-content: space-evenly;
-margin: 10px 0;
-}
-
-/* === Button Styling === */
-.neon-btn {
-background: linear-gradient(90deg, #FF00A6, #00E5FF);
-color: white;
-font-weight: bold;
-padding: 12px 24px;
-border-radius: 8px;
-cursor: pointer;
-text-align: center;
-transition: 0.3s;
-border: none;
-font-size: 1rem;
-}
-
-.neon-btn:hover {
-transform: scale(1.05);
-box-shadow: 0 0 10px #00E5FF, 0 0 20px #FF00A6;
-}
-
-/* === Progress Bar for Timer === */
-.progress-container {
-width: 80%;
-height: 10px;
-background: rgba(255, 255, 255, 0.2);
-border-radius: 5px;
-margin: 10px 0;
-overflow: hidden;
-}
-
-.progress-bar {
-height: 100%;
-background: linear-gradient(90deg, #FF00A6, #00E5FF);
-transition: width 1s linear;
-}
-
-/* === Input Labels & Formatting === */
-.set-header {
-display: flex;
-justify-content: space-evenly;
-font-weight: bold;
-margin-bottom: 5px;
-color: rgba(255, 255, 255, 0.8);
-}
-
-.set-item {
-display: flex;
-align-items: center;
-justify-content: space-evenly;
-margin: 10px 0;
-}
-
-.set-number {
-font-weight: bold;
-color: rgba(255, 255, 255, 0.8);
-}
-
-/* === Checkmark Animation === */
-.checkmark-btn {
-background: rgba(255, 255, 255, 0.1);
-border: 2px solid rgba(255, 255, 255, 0.2);
-color: white;
-font-size: 1.2rem;
-padding: 8px;
-border-radius: 50%;
-cursor: pointer;
-transition: all 0.3s ease-in-out;
-}
-
-.checkmark-btn.completed {
-background: #00FF00;
-box-shadow: 0 0 10px #00FF00;
-color: black;
-}
-
-/* === Timer Progress Bar === */
-.progress-container {
-width: 80%;
-height: 10px;
-background: rgba(255, 255, 255, 0.2);
-border-radius: 5px;
-margin: 10px 0;
-overflow: hidden;
-}
-
-/* === Mobile Responsive Design === */
-@media (max-width: 768px) {
-  .workout-container {
-    padding: 10px;
-    align-items: center;
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    font-size: 1rem;
+    padding: 8px;
+    border-radius: 6px;
+    text-align: center;
+    outline: none;
+    transition: all 0.3s ease-in-out;
+    width: 60px; /* More compact for table-like format */
+    box-shadow: 0 0 8px rgba(0, 229, 255, 0.3);
   }
-
-  .workout-card {
-    width: 95%;
+  
+  .neon-input:focus {
+    border-color: #00E5FF;
+    box-shadow: 0 0 12px #00E5FF, 0 0 20px #FF00A6;
+  }
+  
+  /* === Workout & Set Containers === */
+  .workout-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
     padding: 15px;
   }
-
+  
+  .workout-card {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(8px);
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 15px;
+    width: 95%;
+    max-width: 600px;
+    text-align: center;
+    box-shadow: 0 4px 16px rgba(0, 229, 255, 0.2);
+  }
+  
+  /* === Workout Name Header === */
+  .workout-header {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #00E5FF;
+    text-align: left;
+    margin-bottom: 5px;
+  }
+  
+  /* === Set Input Row (More Organized) === */
   .set-item {
-    flex-direction: column;
-    align-items: flex-start;
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr 1fr 1fr;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    padding: 6px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   }
-
+  
+  /* === Set Headers === */
   .set-header {
-    flex-direction: column;
-    align-items: flex-start;
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr 1fr 1fr;
+    align-items: center;
+    font-weight: bold;
+    font-size: 0.9rem;
+    text-align: center;
+    padding: 8px 0;
+    color: rgba(255, 255, 255, 0.8);
+    border-bottom: 2px solid rgba(255, 255, 255, 0.2);
   }
-
-  .neon-input {
-    width: 100%;
-    margin-bottom: 10px;
+  
+  /* === Set Number Styling === */
+  .set-number {
+    font-weight: bold;
+    color: rgba(255, 255, 255, 0.8);
+    text-align: center;
   }
-
+  
+  /* === Neon Buttons (Improved) === */
   .neon-btn {
-    width: 100%;
-    margin-bottom: 10px;
+    background: linear-gradient(90deg, #FF00A6, #00E5FF);
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    text-decoration: none;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    text-align: center;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 0 8px rgba(0, 229, 255, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 100px;
   }
-
+  
+  .neon-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 16px #00E5FF, 0 0 24px #FF00A6;
+  }
+  
+  .neon-btn:active {
+    transform: scale(0.95);
+    box-shadow: 0 0 12px #00E5FF, 0 0 20px #FF00A6;
+  }
+  
+  /* === Add Set Button Styling === */
+  .add-set-btn {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    width: 100%;
+    padding: 10px;
+    border-radius: 6px;
+    text-align: center;
+    font-size: 0.9rem;
+    font-weight: bold;
+    margin-top: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  
+  .add-set-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+  }
+  
+  /* === Checkmark Button for Completion === */
+  .checkmark-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    font-size: 1rem;
+    padding: 6px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .checkmark-btn.completed {
+    background: #00FF00;
+    box-shadow: 0 0 8px #00FF00;
+    color: black;
+  }
+  
+  /* === Progress Bar for Timer === */
   .progress-container {
     width: 100%;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+    margin: 8px 0;
+    overflow: hidden;
   }
-}
-
-
+  
+  .progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #FF00A6, #00E5FF);
+    transition: width 1s linear;
+  }
+  
+  /* === Mobile Responsive Design === */
+  @media (max-width: 768px) {
+    .workout-container {
+      padding: 10px;
+      align-items: center;
+    }
+  
+    .workout-card {
+      width: 95%;
+      padding: 12px;
+    }
+  
+    /* Adjusted Set Layout for Smaller Screens */
+    .set-item,
+    .set-header {
+      grid-template-columns: 1fr 2fr 1fr 1fr; /* Hide last column */
+      font-size: 0.85rem;
+      gap: 6px;
+    }
+  
+    /* Adjust Inputs for Mobile */
+    .neon-input {
+      width: 50px;
+      font-size: 0.85rem;
+      padding: 6px;
+    }
+  
+    /* Buttons Fit on Mobile */
+    .neon-btn {
+      width: 100%;
+      margin-bottom: 6px;
+      font-size: 0.85rem;
+      padding: 8px 0;
+    }
+  
+    /* Centered Button Layout */
+    .button-container {
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+  
+    /* Progress Bar Full Width */
+    .progress-container {
+      width: 100%;
+    }
+  }
+  

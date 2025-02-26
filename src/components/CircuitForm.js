@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./CircuitForm.css";
 
-function CircuitForm({ addCircuit, darkMode, toggleDarkMode }) {
+function CircuitForm({ addCircuit }) {
   const [circuitName, setCircuitName] = useState("Workout1");
   const [workouts, setWorkouts] = useState([]);
   const [isEditingName, setIsEditingName] = useState(false);
@@ -86,12 +86,10 @@ function CircuitForm({ addCircuit, darkMode, toggleDarkMode }) {
 
   return (
     <div className="workout-container">
-      <span className="dark-mode-toggle" onClick={toggleDarkMode}>
-        🌙
-      </span>
+      
 
       <Link to="/" className="neon-btn home-btn">
-        🏠 Home
+        Home
       </Link>
 
       <h2 className="neon-title" onClick={() => setIsEditingName(true)}>

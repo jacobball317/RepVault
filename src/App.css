@@ -179,19 +179,6 @@ body {
 }
 /*------------------------------*/
 
-/* === Dark Mode Toggle === */
-.dark-mode-toggle {
-  cursor: pointer;
-  font-size: 2rem;
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  transition: all 0.3s ease-in-out;
-}
-
-.dark-mode-toggle:hover {
-  filter: drop-shadow(0 0 5px #00E5FF);
-}
 
 /* Centered Timer Section */
 .centered {
