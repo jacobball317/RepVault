@@ -1,9 +1,12 @@
 .laser-background {
-  position: absolute;
-  width: 100vw;
+  position: fixed;
+  width: 100vw; /* Ensure it spans the entire viewport */
   height: 100vh;
   overflow: hidden;
+  left: 0;
+  top: 0;
 }
+
 
 .laser {
   position: absolute;

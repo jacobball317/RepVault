@@ -65,6 +65,7 @@ body {
   max-width: 500px;
   width: 90%;
   position: relative;
+  margin: 0 auto;
 }
 
 .glass-card::before {
@@ -129,29 +130,54 @@ body {
 .button-container {
   display: flex;
   justify-content: center;
-  gap: 15px;
+  gap: 10px;
   margin-top: 20px;
 }
 
-/* === Neon Buttons === */
+/* === Button Styling === */
 .neon-btn {
-  background: linear-gradient(90deg, #FF00A6, #00E5FF);
+  background: #FF00A6;
   color: white;
   font-weight: bold;
+  text-transform: uppercase; /* Optional: Makes text cleaner */
+  letter-spacing: 1px; /* Adds a modern feel */
   text-decoration: none;
   border: none;
-  padding: 12px 24px;
-  border-radius: 8px;
+  padding: 14px 32px; /* Balanced padding */
+  border-radius: 10px; /* Slightly more rounded corners */
   cursor: pointer;
-  transition: 0.3s ease-in-out;
   font-size: 1rem;
   text-align: center;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 0 10px rgba(0, 229, 255, 0.3);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 180px; /* Prevents shrinking */
 }
 
+/* Hover Effect - Enhances Glow */
 .neon-btn:hover {
-  transform: scale(1.05);
+  transform: translateY(-2px);
+  box-shadow: 0 0 20px #00E5FF, 0 0 30px #FF00A6;
+}
+
+/* Click Effect - Slight Press */
+.neon-btn:active {
+  transform: scale(0.95);
   box-shadow: 0 0 15px #00E5FF, 0 0 25px #FF00A6;
 }
+
+/* Adjust for mobile devices */
+@media (max-width: 768px) {
+  .neon-btn {
+    width: 100%; /* Full width for smaller screens */
+    min-width: auto;
+    padding: 12px 0;
+    font-size: 0.9rem;
+  }
+}
+/*------------------------------*/
 
 /* === Dark Mode Toggle === */
 .dark-mode-toggle {
@@ -228,3 +254,6 @@ body {
     padding: 10px;
   }
 }
+
+/* {
+  outline: 1px solid red; /* Helps visualize elements } */
