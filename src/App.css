@@ -69,8 +69,20 @@ body {
   text-align: center;
   max-width: 500px;
   width: 90%;
-  position: center;
+  position: relative;
   margin: 0 auto;
+  transition: all 0.3s ease-in-out;
+}
+
+.glass-card h3 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: #fff;
+}
+
+.glass-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(0, 229, 255, 0.6), 0 0 30px rgba(255, 0, 166, 0.6);
 }
 
 .glass-card::before {
@@ -96,10 +108,10 @@ body {
     border-image: linear-gradient(90deg, rgba(255, 0, 166, 0.8), rgba(0, 229, 255, 0.8)) 1;
   }
   50% {
-    border-image: linear-gradient(90deg, rgba(0, 255, 150, 0.8), rgba(255, 229, 0, 0.8)) 1;
+    border-image: linear-gradient(90deg, rgba(0, 229, 255, 0.8), rgba(255, 0, 166, 0.8)) 1;
   }
   75% {
-    border-image: linear-gradient(90deg, rgba(255, 229, 0, 0.8), rgba(0, 229, 255, 0.8)) 1;
+    border-image: linear-gradient(90deg, rgba(255, 0, 166, 0.8), rgba(0, 229, 255, 0.8)) 1;
   }
   100% {
     border-image: linear-gradient(90deg, rgba(0, 229, 255, 0.8), rgba(255, 0, 166, 0.8)) 1;
@@ -113,6 +125,7 @@ body {
   background: linear-gradient(90deg, #00E5FF, #FF00A6);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  margin-bottom: 10px;
 }
 
 /* === Subtitle Text === */
@@ -204,3 +217,80 @@ body {
   box-shadow: 0 0 15px #00E5FF, 0 0 25px #FF00A6;
 }
 
+/* For Select template */
+.template-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+  max-width: 500px;
+  margin: 20px auto;
+}
+
+.title-container {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+
+/* Smooth Fade-in Animation */
+.fade-in {
+  animation: fadeIn 1s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Glowing Text Effect */
+.glow-text {
+  text-shadow: 0 0 5px rgba(0, 229, 255, 0.8), 0 0 10px rgba(255, 0, 166, 0.8);
+  animation: glow-pulse 2s infinite alternate;
+}
+
+@keyframes glow-pulse {
+  from {
+    text-shadow: 0 0 5px rgba(0, 229, 255, 0.6), 0 0 10px rgba(255, 0, 166, 0.6);
+  }
+  to {
+    text-shadow: 0 0 10px rgba(0, 229, 255, 1), 0 0 20px rgba(255, 0, 166, 1);
+  }
+}
+
+/* Hover Glow on Template Cards */
+.hover-glow {
+  transition: all 0.3s ease-in-out;
+}
+
+.hover-glow:hover {
+  box-shadow: 0 0 20px rgba(0, 229, 255, 0.6), 0 0 30px rgba(255, 0, 166, 0.6);
+  transform: scale(1.05);
+}
+
+.center-title {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.template-grid-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.template-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 20px;
+  max-width: 600px;
+}

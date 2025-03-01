@@ -1,16 +1,15 @@
 import React, { useState } from "react";
-import { Routes, Route, Link } from "react-router-dom";
+import { Routes, Route, Link, useNavigate } from "react-router-dom";
 import CircuitForm from "./components/CircuitForm";  // ✅ Ensure this is correctly imported
+import SelectTemplate from "./components/SelectTemplate";
 import LaserBackground from "./components/LaserBackground";
 import "./App.css";
 
 function App() {
-  const [savedCircuits, setSavedCircuits] = useState([]);
+  const navigate = useNavigate();
 
-  const loadCircuits = () => {
-    const storedCircuits = JSON.parse(localStorage.getItem("circuits")) || [];
-    setSavedCircuits(storedCircuits);
-    alert("Loaded previous circuits!");
+  const loadTemplates = () => {
+    navigate("/select-template"); // Redirect to template selection page
   };
 
   return (
@@ -22,19 +21,23 @@ function App() {
             <>
               <LaserBackground />
               <div className="home-container">
+                {/* New Glowing Orb */}
+                <div className="glowing-orb"></div>
+
                 <div className="glass-card">
                   <h1 className="neon-title">Rep Vault</h1>
                   <p className="subtext">Your Personal Workout Tracker</p>
                   <div className="button-container">
-                    <Link to="/create-circuit" className="neon-btn">Create Circuit</Link> {/* ✅ Correct Routing */}
-                    <button className="neon-btn" onClick={loadCircuits}>Load Circuits</button>
+                    <Link to="/create-template" className="neon-btn">Create Template</Link>
+                    <button className="neon-btn" onClick={loadTemplates}>Load Templates</button>
                   </div>
                 </div>
               </div>
             </>
           }
         />
-        <Route path="/create-circuit" element={<CircuitForm />} />  {/* ✅ Add this */}
+        <Route path="/create-template" element={<CircuitForm />} />  {/* ✅ Add this */}
+        <Route path="/select-template" element={<SelectTemplate />} />  {/* ✅ Route to SelectTemplate */}
         <Route path="*" element={<h2 className="not-found">Page Not Found. <Link to="/">Go Home</Link></h2>} />
       </Routes>
     </div>
