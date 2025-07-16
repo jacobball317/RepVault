@@ -99,6 +99,26 @@
     align-items: center;
     justify-content: center;
     min-width: 100px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .neon-btn::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 150%;
+    height: 150%;
+    background: radial-gradient(circle, #00e5ff40 10%, transparent 70%);
+    transform: translate(-50%, -50%) scale(0);
+    transition: transform 0.4s ease-out;
+    pointer-events: none;
+    border-radius: 50%;
+  }
+
+  .neon-btn:active::after {
+    transform: translate(-50%, -50%) scale(1);
   }
   
   .neon-btn:hover {
@@ -163,5 +183,15 @@
     background: linear-gradient(90deg, #FF00A6, #00E5FF);
     transition: width 1s linear;
   }
-  
-  
+
+  @media (max-width: 768px) {
+    .neon-btn {
+      width: 100%;
+      min-width: auto;
+      font-size: 0.9rem;
+    }
+
+    .set-item {
+      grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    }
+  }
