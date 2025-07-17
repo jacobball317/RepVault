@@ -88,9 +88,7 @@ function CircuitForm({ addCircuit }) {
     <div className="workout-container">
       
 
-      <Link to="/" className="neon-btn home-btn">
-        Home
-      </Link>
+      <Link to="/" className="home-btn">🏠 Home</Link>
 
       <h2 className="neon-title" onClick={() => setIsEditingName(true)}>
         {isEditingName ? (
@@ -143,14 +141,14 @@ function CircuitForm({ addCircuit }) {
             className="neon-input workout-name-input"
           />
           <div className="set-header">
-            <p>Set</p>
-            <p>Weight (lbs)</p>
-            <p>Reps</p>
-            <p>Done</p>
+            <p style={{ color: "black" }}>Set</p>
+            <p style={{ color: "black" }}>Weight (lbs)</p>
+            <p style={{ color: "black" }}>Reps</p>
+            <p style={{ color: "black" }}>Done</p>
           </div>
           {workout.sets.map((set, setIndex) => (
             <div key={setIndex} className="set-item">
-              <p className="set-number">{setIndex + 1}</p>
+              <p className="set-number" style={{ color: "black" }}>{setIndex + 1}</p>
               <input
                 type="number"
                 value={set.weight}

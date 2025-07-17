@@ -5,14 +5,26 @@ body {
   background-color: #0a0a0a;
   color: white;
   font-family: 'Inter', sans-serif;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   min-height: 100vh;
   overflow: hidden;
   overflow-x: hidden;
   margin: 0;
   width: 100%;
+}
+
+.App {
+  backdrop-filter: blur(8px);
+}
+
+/* Vanta Background */
+.vanta-background {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  pointer-events: none;
 }
 
 /* === Background Animation === */
@@ -64,8 +76,7 @@ body {
 
 /* === Glassmorphism Card === */
 .glass-card {
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(15px);
+  background: #fdfdfb;
   padding: 30px;
   border-radius: 15px;
   text-align: center;
@@ -74,12 +85,13 @@ body {
   position: relative;
   margin: 0 auto;
   transition: all 0.3s ease-in-out;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
 }
 
 .glass-card h3 {
   margin: 0;
   font-size: 1.5rem;
-  color: #fff;
+  color: #333;
 }
 
 .glass-card:hover {
@@ -87,55 +99,57 @@ body {
   box-shadow: 0 0 20px rgba(0, 229, 255, 0.6), 0 0 30px rgba(255, 0, 166, 0.6);
 }
 
-.glass-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  border-radius: 15px;
-  border: 5px solid;
-  border-image: linear-gradient(90deg, rgba(0, 229, 255, 0.8), rgba(255, 0, 166, 0.8)) 1;
-  filter: blur(10px);
-  z-index: -1;
-  animation: smooth-color-change 5s infinite linear;
-}
+/* Removed unused .glass-card .home-btn styling block */
 
-@keyframes smooth-color-change {
-  0% {
-    border-image: linear-gradient(90deg, rgba(0, 229, 255, 0.8), rgba(255, 0, 166, 0.8)) 1;
-  }
-  25% {
-    border-image: linear-gradient(90deg, rgba(255, 0, 166, 0.8), rgba(0, 229, 255, 0.8)) 1;
-  }
-  50% {
-    border-image: linear-gradient(90deg, rgba(0, 229, 255, 0.8), rgba(255, 0, 166, 0.8)) 1;
-  }
-  75% {
-    border-image: linear-gradient(90deg, rgba(255, 0, 166, 0.8), rgba(0, 229, 255, 0.8)) 1;
-  }
-  100% {
-    border-image: linear-gradient(90deg, rgba(0, 229, 255, 0.8), rgba(255, 0, 166, 0.8)) 1;
-  }
-}
-
+/* === Neon Title === */
 /* === Neon Title === */
 .neon-title {
   font-size: 3rem;
   font-weight: bold;
-  background: linear-gradient(90deg, #00E5FF, #FF00A6);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
   margin-bottom: 10px;
   font-family: 'Orbitron', sans-serif;
+  position: relative;
+  transition: all 0.3s ease-in-out;
+  background: linear-gradient(270deg, #00e5ff, #ff00a6, #00e5ff);
+  background-size: 300% auto;
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: cyber-gradient 6s linear infinite;
+}
+
+@keyframes cyber-gradient {
+  0% { background-position: 0% center; }
+  50% { background-position: 100% center; }
+  100% { background-position: 0% center; }
+}
+
+.neon-title::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: -5px;
+  transform: translateX(-50%);
+  width: 60%;
+  height: 2px;
+  background: linear-gradient(to right, #00e5ff, #ff00a6);
+  border-radius: 2px;
+  opacity: 0.7;
+}
+
+.neon-title:hover {
+  color: #0a84ff;
+  transform: scale(1.02);
 }
 
 /* === Subtitle Text === */
 .subtext {
-  font-size: 1.2rem;
-  color: rgba(255, 255, 255, 0.7);
+  font-size: 1.1rem;
+  color: #444;
+  font-weight: 500;
   margin-bottom: 20px;
+  line-height: 1.5;
 }
 
 /* === Button Container === */
@@ -148,26 +162,30 @@ body {
 
 /* === Button Styling === */
 .neon-btn {
-  background: #FF00A6;
+  background: #0a84ff;
   color: white;
   font-weight: bold;
-  text-transform: uppercase; /* Optional: Makes text cleaner */
-  letter-spacing: 1px; /* Adds a modern feel */
-  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
   border: none;
-  padding: 14px 32px; /* Balanced padding */
-  border-radius: 10px; /* Slightly more rounded corners */
+  padding: 10px 20px;
+  border-radius: 8px;
   cursor: pointer;
-  font-size: 1rem;
+  font-size: 0.9rem;
   text-align: center;
-  transition: all 0.3s ease-in-out;
-  box-shadow: 0 0 10px rgba(0, 229, 255, 0.3);
+  transition: background 0.3s ease-in-out, transform 0.2s;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 180px; /* Prevents shrinking */
-  position: relative;
-  overflow: hidden;
+}
+
+.neon-btn:hover {
+  background: #0066cc;
+  transform: translateY(-2px);
+}
+
+.neon-btn:active {
+  transform: scale(0.98);
 }
 
 /* Ripple effect */
@@ -324,26 +342,6 @@ body {
 }
 
 /* Floating Nav Styles */
-.floating-nav {
-  position: fixed;
-  left: 20px;
-  top: 50%;
-  transform: translateY(-50%);
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  z-index: 999;
-}
-
-.floating-nav a {
-  background: linear-gradient(90deg, #FF00A6, #00E5FF);
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: white;
-  text-decoration: none;
-  box-shadow: 0 0 10px rgba(0, 229, 255, 0.4);
-}
+/* .floating-nav {
+  display: none;
+} */

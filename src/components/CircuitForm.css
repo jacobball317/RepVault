@@ -28,8 +28,7 @@
   }
   
   .workout-card {
-    background: rgba(255, 255, 255, 0.08);
-    backdrop-filter: blur(8px);
+    background: #fdfdfb;
     border-radius: 12px;
     padding: 15px;
     margin-bottom: 15px;
@@ -37,6 +36,7 @@
     max-width: 600px;
     text-align: center;
     box-shadow: 0 4px 16px rgba(0, 229, 255, 0.2);
+    color: black;
   }
   
   /* === Workout Name Header === */
@@ -68,14 +68,14 @@
     font-size: 0.9rem;
     text-align: center;
     padding: 8px 0;
-    color: rgba(255, 255, 255, 0.8);
+    color: black;
     border-bottom: 2px solid rgba(255, 255, 255, 0.2);
   }
   
   /* === Set Number Styling === */
   .set-number {
     font-weight: bold;
-    color: rgba(255, 255, 255, 0.8);
+    color: black;
     text-align: center;
   }
   
@@ -184,6 +184,22 @@
     transition: width 1s linear;
   }
 
+  /* === Home Button inside Button Container === */
+  .button-container .home-btn {
+    background: #007bff;
+    color: white;
+    border-radius: 6px;
+    padding: 8px 16px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: background 0.3s ease;
+  }
+
+  .button-container .home-btn:hover {
+    background: #0056b3;
+  }
+
   @media (max-width: 768px) {
     .neon-btn {
       width: 100%;
@@ -195,3 +211,10 @@
       grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
     }
   }
+/* === Workout Name Input Color Override === */
+.workout-name-input {
+  color: black;
+}
+.workout-name-input::placeholder {
+  color: #555;
+}
