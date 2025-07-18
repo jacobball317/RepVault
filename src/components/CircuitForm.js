@@ -88,47 +88,25 @@ function CircuitForm({ addCircuit }) {
     <div className="workout-container">
       
 
-      <Link to="/" className="home-btn">🏠 Home</Link>
+      <Link to="/" className="home-btn">
+        &#8962;
+      </Link>
 
-      <h2 className="neon-title" onClick={() => setIsEditingName(true)}>
-        {isEditingName ? (
-          <input
-            type="text"
-            value={circuitName}
-            onChange={(e) => setCircuitName(e.target.value)}
-            onBlur={() => setIsEditingName(false)}
-            autoFocus
-            className="neon-input"
-          />
-        ) : (
-          circuitName
-        )}
-      </h2>
-
-      {/* Rest Timer UI */}
-      <div className="timer-section centered">
-        <p className="rest-timer-text">
-          Rest Timer: <strong>{timer !== null && timer > 0 ? formatTime(timer) : "Ready"}</strong>
-        </p>
-        <select
-          className="dropdown"
-          value={restTime}
-          onChange={(e) => setRestTime(Number(e.target.value))}
-        >
-          {[1, 2, 3, 4, 5].map((time) => (
-            <option key={time} value={time}>
-              {time} min
-            </option>
-          ))}
-        </select>
-      </div>
-
-      {/* Progress Bar for Rest Timer */}
-      <div className="progress-container">
-        <div
-          className="progress-bar"
-          style={{ width: `${(timer / (restTime * 60)) * 100}%` }}
-        ></div>
+      <div className="workout-card">
+        <h2 className="neon-title" onClick={() => setIsEditingName(true)}>
+          {isEditingName ? (
+            <input
+              type="text"
+              value={circuitName}
+              onChange={(e) => setCircuitName(e.target.value)}
+              onBlur={() => setIsEditingName(false)}
+              autoFocus
+              className="neon-input"
+            />
+          ) : (
+            circuitName
+          )}
+        </h2>
       </div>
 
       {/* Workout Section */}
@@ -172,6 +150,29 @@ function CircuitForm({ addCircuit }) {
           <button className="neon-btn" onClick={() => addSetToWorkout(workoutIndex)}>
             + Add Set
           </button>
+
+          <div className="timer-section centered">
+            <p className="rest-timer-text">
+              Rest Timer: <strong>{timer !== null && timer > 0 ? formatTime(timer) : "Ready"}</strong>
+            </p>
+            <select
+              className="dropdown"
+              value={restTime}
+              onChange={(e) => setRestTime(Number(e.target.value))}
+            >
+              {[1, 2, 3, 4, 5].map((time) => (
+                <option key={time} value={time}>
+                  {time} min
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="progress-container">
+            <div
+              className="progress-bar"
+              style={{ width: `${(timer / (restTime * 60)) * 100}%` }}
+            ></div>
+          </div>
         </div>
       ))}
 

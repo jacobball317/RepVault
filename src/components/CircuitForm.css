@@ -7,7 +7,7 @@
     padding: 8px;
     border-radius: 6px;
     text-align: center;
-    outline: none;
+    outline: 1px solid rgba(0, 0, 0, 0.2);
     transition: all 0.3s ease-in-out;
     width: 60px; /* More compact for table-like format */
     box-shadow: 0 0 8px rgba(0, 229, 255, 0.3);
@@ -152,9 +152,9 @@
   
   /* === Checkmark Button for Completion === */
   .checkmark-btn {
-    background: rgba(255, 255, 255, 0.1);
-    border: 2px solid rgba(255, 255, 255, 0.2);
-    color: white;
+    background: #d3d3d3;
+    border: 2px solid #aaa;
+    color: black;
     font-size: 1rem;
     padding: 6px;
     border-radius: 50%;
@@ -164,8 +164,9 @@
   
   .checkmark-btn.completed {
     background: #00FF00;
-    box-shadow: 0 0 8px #00FF00;
-    color: black;
+    box-shadow: 0 0 6px #00FF00;
+    color: white;
+    border: 2px solid #00aa00;
   }
   
   /* === Progress Bar for Timer === */
@@ -184,20 +185,33 @@
     transition: width 1s linear;
   }
 
-  /* === Home Button inside Button Container === */
-  .button-container .home-btn {
-    background: #007bff;
-    color: white;
-    border-radius: 6px;
-    padding: 8px 16px;
-    text-decoration: none;
-    font-size: 0.9rem;
+  /* === Home Button Styling (Updated) === */
+  .home-btn {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 2rem;
     font-weight: 600;
-    transition: background 0.3s ease;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 6px 12px;
+    text-decoration: none;
+    transition: all 0.3s ease-in-out;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+    height: auto;
+    box-shadow: 0 0 8px rgba(0, 229, 255, 0.3);
   }
 
-  .button-container .home-btn:hover {
-    background: #0056b3;
+  .home-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 16px #00E5FF, 0 0 24px #FF00A6;
+  }
+
+  .home-btn:active {
+    transform: scale(0.95);
+    box-shadow: 0 0 12px #00E5FF, 0 0 20px #FF00A6;
   }
 
   @media (max-width: 768px) {
