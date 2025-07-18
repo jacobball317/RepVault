@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import "../App.css";
+import "./SelectTemplate.css";
 
 function SelectTemplate() {
   const navigate = useNavigate();
@@ -8,7 +8,7 @@ function SelectTemplate() {
   const templates = [
     { name: "Push Day", workouts: ["Bench Press", "Shoulder Press", "Tricep Dips"] },
     { name: "Pull Day", workouts: ["Deadlifts", "Pull-ups", "Bicep Curls"] },
-    { name: "Legs Day", workouts: ["Squats", "Leg Press", "Calf Raises"] },
+    { name: "Leg Day", workouts: ["Squats", "Leg Press", "Calf Raises"] },
   ];
 
   return (
