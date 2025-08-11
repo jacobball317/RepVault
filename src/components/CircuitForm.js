@@ -1,191 +1,197 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useMemo, useState } from "react";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import "./CircuitForm.css";
 
-function CircuitForm({ addCircuit }) {
-  const [circuitName, setCircuitName] = useState("Workout1");
-  const [workouts, setWorkouts] = useState([]);
-  const [isEditingName, setIsEditingName] = useState(false);
-  const [restTime, setRestTime] = useState(1);
-  const [timer, setTimer] = useState(null);
+/* tiny helpers */
+const epley1RM = (w, r) => Math.round((Number(w) || 0) * (1 + (Number(r) || 0) / 30));
+const brzycki1RM = (w, r) => Math.round((Number(w) || 0) * (36 / (37 - (Number(r) || 0) || 1)));
+function getPlatePlan(target, bar=45, plates=[45,35,25,10,5,2.5]){ let perSide=(Number(target)-bar)/2; const plan=[]; for(const p of plates){ const c=Math.floor(perSide/p); if(c>0){ plan.push([p,c]); perSide-=p*c; } } return plan; }
+function planToString(plan){ return !plan?.length ? "—" : plan.map(([p,c])=>`${c}×${p}`).join(" · "); }
 
-  // Add a new workout with an initial set
-  const addWorkout = () => {
-    setWorkouts([
-      ...workouts,
-      { name: "New Workout", sets: [{ reps: 10, weight: 50, done: false }] },
-    ]);
-  };
+export default function CircuitForm({ addCircuit, edit, updateCircuit, circuits = [], logSession }) {
+  const navigate = useNavigate();
+  const { id } = useParams();
+  const location = useLocation();
+  const startNow = new URLSearchParams(location.search).get("start") === "1";
 
-  // Add a new set to an existing workout
-  const addSetToWorkout = (workoutIndex) => {
-    const updatedWorkouts = [...workouts];
-    updatedWorkouts[workoutIndex].sets.push({
-      reps: 10,
-      weight: 50,
-      done: false,
-    });
-    setWorkouts(updatedWorkouts);
-  };
+  const base = useMemo(() => circuits.find(c => c.id === id), [circuits, id]);
+  const [name, setName] = useState(base?.name || "New Template");
+  const [notes, setNotes] = useState(base?.notes || "");
+  const [exercises, setExercises] = useState(() =>
+    base?.exercises?.map(e => ({ ...e, progression: undefined, targetRPE: undefined })) || [
+      { id: crypto.randomUUID(), name: "Exercise", sets: 3, reps: 8, weight: 0, restSec: 90 }
+    ]
+  );
 
-  // Update a specific set in a workout
-  const updateSet = (workoutIndex, setIndex, field, value) => {
-    const updatedWorkouts = [...workouts];
-    updatedWorkouts[workoutIndex].sets[setIndex][field] = value;
-    setWorkouts(updatedWorkouts);
-  };
+  const [isSession, setIsSession] = useState(Boolean(startNow));
+  const [activeTimers, setActiveTimers] = useState({});
 
-  // Update workout name
-  const updateWorkoutName = (index, name) => {
-    const updatedWorkouts = [...workouts];
-    updatedWorkouts[index].name = name;
-    setWorkouts(updatedWorkouts);
-  };
-
-  // Toggle set completion with animation
-  const toggleSetDone = (workoutIndex, setIndex) => {
-    const updatedWorkouts = [...workouts];
-    const set = updatedWorkouts[workoutIndex].sets[setIndex];
-    set.done = !set.done;
-    setWorkouts(updatedWorkouts);
-
-    if (set.done) {
-      startRestTimer();
-    }
-  };
-
-  // Start the rest timer
-  const startRestTimer = () => {
-    setTimer(restTime * 60);
-  };
-
-  // Countdown effect for the rest timer
   useEffect(() => {
-    if (timer === null || timer <= 0) return;
-
-    const interval = setInterval(() => {
-      setTimer((prevTimer) => (prevTimer > 0 ? prevTimer - 1 : 0));
+    if (!isSession) return;
+    const t = setInterval(() => {
+      setActiveTimers(prev => {
+        const next = { ...prev };
+        Object.keys(next).forEach(k => next[k] = Math.max(0, next[k] - 1));
+        return next;
+      });
     }, 1000);
+    return () => clearInterval(t);
+  }, [isSession]);
 
-    return () => clearInterval(interval);
-  }, [timer]);
+  const totalVolume = useMemo(
+    () => exercises.reduce((sum, ex) => sum + (ex.sets||0) * (ex.reps||0) * (Number(ex.weight)||0), 0),
+    [exercises]
+  );
 
-  // Save the workout circuit
-  const saveCircuit = () => {
-    addCircuit({ name: circuitName, workouts, restTime });
-    setCircuitName("Workout1");
-    setWorkouts([]);
-  };
+  function addExerciseRow(){
+    setExercises(prev => [...prev, { id: crypto.randomUUID(), name: "New Exercise", sets: 3, reps: 10, weight: 0, restSec: 90 }]);
+  }
+  const removeExercise = (exId) => setExercises(prev => prev.filter(e => e.id !== exId));
+  const updateExercise = (exId, patch) => setExercises(prev => prev.map(e => e.id === exId ? { ...e, ...patch } : e));
 
-  // Format time for display (MM:SS)
-  const formatTime = (seconds) => {
-    const mins = Math.floor(seconds / 60);
-    const secs = seconds % 60;
-    return `${mins}:${secs < 10 ? "0" : ""}${secs}`;
-  };
+  function onSaveTemplate(){
+    const payload = { name, notes, exercises: exercises.map(({progression,targetRPE, ...rest}) => rest) };
+    if (edit && base) updateCircuit?.(base.id, payload);
+    else addCircuit?.(payload);
+    navigate("/select-template");
+  }
+  function onStartSession(){ setIsSession(true); }
+  function onEndSession(){
+    logSession?.({
+      templateId: base?.id,
+      name: name || base?.name,
+      totalVolume,
+      date: new Date().toISOString(),
+      exercises
+    });
+    navigate("/analytics");
+  }
+
+  function move(idx, dir){
+    setExercises(prev => {
+      const next = [...prev], ni = idx + dir;
+      if (ni < 0 || ni >= next.length) return prev;
+      [next[idx], next[ni]] = [next[ni], next[idx]];
+      return next;
+    });
+  }
 
   return (
-    <div className="workout-container">
-      
+    <div className="page-container">
+      <h1 className="neon-title" style={{ textAlign: "center" }}>
+        {isSession ? "Workout Session" : edit ? "Edit Template" : "Create Template"}
+      </h1>
 
-      <Link to="/" className="home-btn">
-        &#8962;
-      </Link>
+      <div className="card">
+        <label>Template Name</label>
+        <input className="neon-input" value={name} onChange={e => setName(e.target.value)} />
 
-      <div className="workout-card">
-        <h2 className="neon-title" onClick={() => setIsEditingName(true)}>
-          {isEditingName ? (
-            <input
-              type="text"
-              value={circuitName}
-              onChange={(e) => setCircuitName(e.target.value)}
-              onBlur={() => setIsEditingName(false)}
-              autoFocus
-              className="neon-input"
-            />
-          ) : (
-            circuitName
-          )}
-        </h2>
+        <label>Notes</label>
+        <textarea className="neon-input" rows={3} value={notes} onChange={e => setNotes(e.target.value)} />
+
+        {!isSession && (
+          <div className="row gap" style={{ marginTop: 10 }}>
+            <button className="btn btn-primary" onClick={onSaveTemplate}>{edit ? "Save Changes" : "Save Template"}</button>
+            {base && <button className="btn btn-glass" onClick={onStartSession}>Start Session</button>}
+          </div>
+        )}
+
+        {isSession && (
+          <div className="row gap" style={{ marginTop: 10 }}>
+            <button className="btn btn-primary" onClick={onEndSession}>Finish &amp; Log</button>
+          </div>
+        )}
       </div>
 
-      {/* Workout Section */}
-      {workouts.map((workout, workoutIndex) => (
-        <div key={workoutIndex} className="workout-card">
-          <input
-            type="text"
-            value={workout.name}
-            onChange={(e) => updateWorkoutName(workoutIndex, e.target.value)}
-            className="neon-input workout-name-input"
-          />
-          <div className="set-header">
-            <p style={{ color: "black" }}>Set</p>
-            <p style={{ color: "black" }}>Weight (lbs)</p>
-            <p style={{ color: "black" }}>Reps</p>
-            <p style={{ color: "black" }}>Done</p>
-          </div>
-          {workout.sets.map((set, setIndex) => (
-            <div key={setIndex} className="set-item">
-              <p className="set-number" style={{ color: "black" }}>{setIndex + 1}</p>
-              <input
-                type="number"
-                value={set.weight}
-                onChange={(e) => updateSet(workoutIndex, setIndex, "weight", e.target.value)}
-                className="neon-input"
-              />
-              <input
-                type="number"
-                value={set.reps}
-                onChange={(e) => updateSet(workoutIndex, setIndex, "reps", e.target.value)}
-                className="neon-input"
-              />
-              <button
-                className={`checkmark-btn ${set.done ? "completed" : ""}`}
-                onClick={() => toggleSetDone(workoutIndex, setIndex)}
-              >
-                ✓
-              </button>
+      <div className="exercises">
+        {exercises.map((ex, idx) => (
+          <div className="template-card exercise" key={ex.id}>
+            <div className="row space">
+              <strong>#{idx + 1}</strong>
+              <div className="row gap">
+                <button className="btn btn-ghost" onClick={() => move(idx, -1)}>↑</button>
+                <button className="btn btn-ghost" onClick={() => move(idx, 1)}>↓</button>
+                <button className="btn btn-danger" onClick={() => removeExercise(ex.id)}>Delete</button>
+              </div>
             </div>
-          ))}
-          <button className="neon-btn" onClick={() => addSetToWorkout(workoutIndex)}>
-            + Add Set
-          </button>
 
-          <div className="timer-section centered">
-            <p className="rest-timer-text">
-              Rest Timer: <strong>{timer !== null && timer > 0 ? formatTime(timer) : "Ready"}</strong>
-            </p>
-            <select
-              className="dropdown"
-              value={restTime}
-              onChange={(e) => setRestTime(Number(e.target.value))}
-            >
-              {[1, 2, 3, 4, 5].map((time) => (
-                <option key={time} value={time}>
-                  {time} min
-                </option>
-              ))}
-            </select>
-          </div>
-          <div className="progress-container">
-            <div
-              className="progress-bar"
-              style={{ width: `${(timer / (restTime * 60)) * 100}%` }}
-            ></div>
-          </div>
-        </div>
-      ))}
+            <div className="grid-2" style={{ marginTop: 8 }}>
+              <div>
+                <label>Name</label>
+                <input className="neon-input" value={ex.name} onChange={e => updateExercise(ex.id, { name: e.target.value })} />
+              </div>
+            </div>
 
-      <div className="button-container">
-        <button className="neon-btn" onClick={addWorkout}>
-          + Add Workout
-        </button>
-        <button className="neon-btn" onClick={saveCircuit}>
-          Save Circuit
-        </button>
+            <div className="grid-4">
+              <div>
+                <label>Sets</label>
+                <input className="neon-input" type="number" min="1" value={ex.sets}
+                  onChange={e => updateExercise(ex.id, { sets: +e.target.value })} />
+              </div>
+              <div>
+                <label>Reps</label>
+                <input className="neon-input" type="number" min="1" value={ex.reps}
+                  onChange={e => updateExercise(ex.id, { reps: +e.target.value })} />
+              </div>
+              <div>
+                <label>Weight (lb)</label>
+                <input className="neon-input" type="number" step="2.5" value={ex.weight}
+                  onChange={e => updateExercise(ex.id, { weight: +e.target.value })} />
+              </div>
+              <div>
+                <label>Rest (s)</label>
+                <input className="neon-input" type="number" min="0" value={ex.restSec || 90}
+                  onChange={e => updateExercise(ex.id, { restSec: +e.target.value })} />
+              </div>
+            </div>
+
+            <div className="row wrap gap" style={{ marginTop: 8 }}>
+              <SmallPlatePlanner weight={Number(ex.weight) || 0} />
+              <Small1RM weight={Number(ex.weight) || 0} reps={Number(ex.reps) || 0} />
+              {isSession && (
+                <TimerWidget
+                  seconds={activeTimers[ex.id] ?? 0}
+                  onStart={() => setActiveTimers(p => ({ ...p, [ex.id]: ex.restSec || 90 }))}
+                />
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div className="row gap" style={{ marginTop: 12 }}>
+        <button className="btn btn-ghost" onClick={addExerciseRow}>+ Add Exercise</button>
+        <div className="muted">Total Volume: <strong>{totalVolume}</strong> lb</div>
       </div>
     </div>
   );
 }
 
-export default CircuitForm;
+/* widgets */
+function SmallPlatePlanner({ weight }){
+  const plan = getPlatePlan(weight);
+  return (
+    <div className="mini-card">
+      <div className="muted">Plates/side for {weight} lb</div>
+      <div>{planToString(plan)}</div>
+    </div>
+  );
+}
+function Small1RM({ weight, reps }){
+  if (!weight || !reps) return null;
+  const e = epley1RM(weight, reps), b = brzycki1RM(weight, reps);
+  return (
+    <div className="mini-card">
+      <div className="muted">Est. 1RM</div>
+      <div>{Math.round((e + b) / 2)} lb</div>
+    </div>
+  );
+}
+function TimerWidget({ seconds, onStart }){
+  return (
+    <div className="mini-card row gap">
+      <button className="btn btn-glass" onClick={onStart}>Rest</button>
+      <span>{seconds > 0 ? seconds + "s" : "Ready"}</span>
+    </div>
+  );
+}
